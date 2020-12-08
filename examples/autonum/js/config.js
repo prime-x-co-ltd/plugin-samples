@@ -39,7 +39,8 @@
                 connective: '接続語設定',
                 typeOfConnective: {
                     hyphen: { 'value': '-', 'text': 'ハイフン( - )' },
-                    underscore: { 'value': '_', 'text': 'アンダースコア( _ )' }
+                    underscore: { 'value': '_', 'text': 'アンダースコア( _ )' },
+                    none: { 'value': '', 'text': 'なし' }
                 },
                 numberingOfDigits: '採番の桁数',
                 numberOfPeriod: '期の選択',
@@ -61,6 +62,7 @@
                     notSelectedDateFormat: '日付形式が選択されていません',
                     notInputTextFormat: 'テキストが入力されていません',
                     invalidNumberingOfDigits: '採番の桁数に正の整数を入力してください',
+                    invalidNumberingOfPeriod: '期に正の整数を入力してください',
                     canNotUseConnectionCharForTextFormat: 'テキストに接続語(-, _)を\n入力することはできません',
                     canNotUseHTMLCharactersForTextFormat: 'テキストにHTML特殊文字(&, <, >, \', ")を\n入力することはできません',
                     apiTokenInvalid: 'APIトークンに正しい権限が設定されていません'
@@ -313,8 +315,8 @@
             }
             var numOfDigit = parseInt($(this.settings.element.input.numberOfDigit).val(), 10);
             var numOfPeriod = parseInt($(this.settings.element.input.numberOfPeriod).val(), 10);
-            var number = new Array(numOfDigit).join('0') + '1';
-            var numberPeriod = new Array(numOfPeriod).join('0') + '1';
+            var number = new Array(numOfDigit).join('0') + '1'; //ここを最新のレコード番号+1にする？
+            var numberPeriod = parseInt(numOfPeriod, 10);
             var dateVal = $(this.settings.element.input.dateFormatSelect).val() || 'null';
             var connective = $(this.settings.element.input.connectiveSelect).val() || '';
             var date = dateVal !== 'null' ? moment().format(dateVal) : '';
@@ -405,6 +407,7 @@
 
             var connective = $(this.settings.element.input.connectiveSelect).val();
             var numOfDigit = $(this.settings.element.input.numberOfDigit).val();
+            var numOfPeriod = $(this.settings.element.input.numberOfPeriod).val();
             var validateResult = true;
             $('.kintoneplugin-alert').remove();
 
@@ -420,6 +423,14 @@
             } else {
                 numOfDigit = parseInt(numOfDigit, 10);
                 $(this.settings.element.input.numberOfDigit).val(numOfDigit);
+            }
+            if (!this.isNumberPositive(numOfPeriod)) {
+                this.alert(this.settings.element.input.numberOfPeriod,
+                    this.settings.i18n.alertMessage.invalidNumberingOfPeriod);
+                validateResult = false;
+            } else {
+                numOfPeriod = parseInt(numOfPeriod, 10);
+                $(this.settings.element.input.numberOfPeriod).val(numOfPeriod);
             }
             // 採番書籍選択未選択チェック
             if (format[0] === 'null') {
@@ -472,6 +483,7 @@
             config['connective'] = connective;
             config['useProxy'] = $(this.settings.element.input.apiToken).val() !== '' ? '1' : '0';
             config['numOfDigit'] = numOfDigit.toString();
+            config['numOfPeriod'] = numOfPeriod.toString();
             return config;
         },
         alert: function(element, mess) {
