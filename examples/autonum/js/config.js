@@ -19,7 +19,7 @@
                     dateTextNumbering: '日付 + テキスト + 連番',
                     textNumbering: 'テキスト + 連番',
                     textDateNumbering: 'テキスト + 日付 + 連番',
-                    textPeriodNumbering: '【MUST】テキスト + 期 + 連番'
+                    textPeriodNumbering: '【PJコード用】テキスト + 期 + 連番'
                 },
                 dateFormat: '日付書式選択（採番書式に日付が含まれる場合のみ）',
                 typeOfDateFormat: {
@@ -42,7 +42,7 @@
                     underscore: { 'value': '_', 'text': 'アンダースコア( _ )' }
                 },
                 numberingOfDigits: '採番の桁数',
-                numberOfPerios: '期の選択',
+                numberOfPeriod: '期の選択',
                 resetTiming: '連番リセットタイミング選択',
                 typeOfResetTiming: {
                     none: 'なし',
@@ -98,7 +98,7 @@
                     underscore: { 'value': '_', 'text': 'Underscore ( _ )' }
                 },
                 numberingOfDigits: 'Number of digits for Numbering',
-                numberOfPerios: 'Number of period for Numbering',
+                numberOfPeriod: 'Number of period for Numbering',
                 resetTiming: 'Reset timing for Numbering',
                 typeOfResetTiming: {
                     none: 'Never',
@@ -194,6 +194,7 @@
                     preview: '#autonum-preview',
                     apiToken: '#autonum-api-token',
                     numberOfDigit: '#autonum-number-of-digit',
+                    numberOfPeriod: '#autonum-number-of-period',
                     textFormatSelect: '#autonum-textFormat-select',
                     dateFormatSelect: '#autonum-dateFormat-select',
                     connectiveSelect: '#autonum-connective-select'
@@ -276,6 +277,7 @@
             $(this.settings.element.input.timing).val([conf['timing']]);
             $(this.settings.element.input.apiToken).val(apiToken);
             $(this.settings.element.input.numberOfDigit).val(conf['numOfDigit']);
+            $(this.settings.element.input.numberOfPeriod).val(conf['numOfPeriod']);
             this.checkAutonumFormat();
         },
         listenAction: function() {
@@ -283,6 +285,7 @@
             $(this.settings.element.input.fieldCode + ', ' +
                 this.settings.element.input.prefix + ', ' +
                 this.settings.element.input.numberOfDigit + ', ' +
+                this.settings.element.input.numberOfPeriod + ', ' +
                 this.settings.element.input.textFormatSelect + ', ' +
                 this.settings.element.input.dateFormatSelect + ', ' +
                 this.settings.element.input.connectiveSelect)
@@ -309,10 +312,13 @@
                 return;
             }
             var numOfDigit = parseInt($(this.settings.element.input.numberOfDigit).val(), 10);
+            var numOfPeriod = parseInt($(this.settings.element.input.numberOfPeriod).val(), 10);
             var number = new Array(numOfDigit).join('0') + '1';
+            var numberPeriod = new Array(numOfPeriod).join('0') + '1';
             var dateVal = $(this.settings.element.input.dateFormatSelect).val() || 'null';
             var connective = $(this.settings.element.input.connectiveSelect).val() || '';
             var date = dateVal !== 'null' ? moment().format(dateVal) : '';
+            
 
             switch (selectFormat) {
                 case 'numbering':
@@ -329,6 +335,9 @@
 
                 case 'textDateNumbering':
                     return (text + connective + date + connective + number);
+                    
+                case 'textPeriodNumbering':
+                    return (text + connective + numberPeriod + connective + number);
 
                 default:
                     return '';
@@ -490,6 +499,9 @@
 
                 case 'textDateNumbering':
                     return ['text', 'date', 'number'];
+                    
+                case 'textPeriodNumbering':
+                    return ['text', 'number', ''];
 
                 default:
                     return ['null', '', ''];
@@ -519,6 +531,7 @@
                     break;
 
                 case 'textNumbering':
+                case 'textPeriodNumbering':
                     $(this.settings.element.input.dateFormatSelect).val(['null']);
                     this.propElement(this.settings.element.input.dateFormatSelect, true);
                     this.propElement(this.settings.element.input.prefix, false);
