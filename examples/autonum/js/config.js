@@ -18,7 +18,8 @@
                     dateNumbering: '日付 + 連番',
                     dateTextNumbering: '日付 + テキスト + 連番',
                     textNumbering: 'テキスト + 連番',
-                    textDateNumbering: 'テキスト + 日付 + 連番'
+                    textDateNumbering: 'テキスト + 日付 + 連番',
+                    textPeriodNumbering: '【MUST】テキスト + 期 + 連番'
                 },
                 dateFormat: '日付書式選択（採番書式に日付が含まれる場合のみ）',
                 typeOfDateFormat: {
@@ -41,6 +42,7 @@
                     underscore: { 'value': '_', 'text': 'アンダースコア( _ )' }
                 },
                 numberingOfDigits: '採番の桁数',
+                numberOfPerios: '期の選択',
                 resetTiming: '連番リセットタイミング選択',
                 typeOfResetTiming: {
                     none: 'なし',
@@ -96,6 +98,7 @@
                     underscore: { 'value': '_', 'text': 'Underscore ( _ )' }
                 },
                 numberingOfDigits: 'Number of digits for Numbering',
+                numberOfPerios: 'Number of period for Numbering',
                 resetTiming: 'Reset timing for Numbering',
                 typeOfResetTiming: {
                     none: 'Never',
@@ -149,6 +152,7 @@
                   underscore: {'value': '_', 'text': '下划线 ( _ )'}
                 },
                 numberingOfDigits: '自动编号的长度',
+                numberOfPerios: '编号周期数',
                 resetTiming: '何时重置编号',
                 typeOfResetTiming: {
                   none: '从不',
