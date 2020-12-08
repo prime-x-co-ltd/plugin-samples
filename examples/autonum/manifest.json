@@ -3,8 +3,8 @@
     "version": 2,
     "type": "APP",
     "name": {
-        "ja": "自動採番プラグイン",
-        "en": "Auto-numbering plug-in",
+        "ja": "PJコード自動発番プラグイン",
+        "en": "Project code auto-numbering plug-in",
         "zh": "自动编号插件"
     },
     "description": {
