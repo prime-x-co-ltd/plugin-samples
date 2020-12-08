@@ -1,6 +1,6 @@
 {
     "manifest_version": 1,
-    "version": 2,
+    "version": 1.0.0,
     "type": "APP",
     "name": {
         "ja": "PJコード自動発番プラグイン",
@@ -8,7 +8,7 @@
         "zh": "自动编号插件"
     },
     "description": {
-        "ja": "保存時に自動採番するプラグインです。",
+        "ja": "採番ルール: 「PJ」 + 期 + 任意の桁",
         "en": "Auto-numbering plug-in",
         "zh": "此插件可在保存记录时自动生成编号。"
     },
@@ -17,7 +17,7 @@
         "js": [
             "https://js.cybozu.com/jquery/2.1.3/jquery.min.js",
             "https://js.kintone.com/momentjs/2.14.1/moment-with-locales.min.js",
-            "https://3bd70ff42b0e4502bf112e6ca6069025.vfs.cloud9.ap-northeast-1.amazonaws.com/_static/git/plugin-samples/examples/autonum/js/desktop.js"
+            "js/desktop.js"
         ],
         "css": [
             "css/51-modern-default.css",
@@ -30,7 +30,7 @@
             "https://js.cybozu.com/jquery/2.1.3/jquery.min.js",
             "https://js.kintone.com/momentjs/2.14.1/moment-with-locales.min.js",
             "https://js.kintone.com/jsrender/0.9.80/jsrender.min.js",
-            "https://3bd70ff42b0e4502bf112e6ca6069025.vfs.cloud9.ap-northeast-1.amazonaws.com/_static/git/plugin-samples/examples/autonum/js/config.js"
+            "js/config.js"
         ],
         "css": [
             "https://js.kintone.com/sweetalert/v1.1.3/sweetalert.css",

@@ -65,7 +65,8 @@
                 this.settings.config.plugin['format3']
             ];
             this.settings.config.NUM_OF_DIGIT = parseInt(this.settings.config.plugin['numOfDigit'], 10);
-
+            this.settings.config.NUM_OF_PERIOD = parseInt(this.settings.config.plugin['numOfPeriod'], 10);
+        
             this.kintoneEvents();
         },
         kintoneEvents: function() {
@@ -95,16 +96,22 @@
                     }
                     var lastNumberingResponse = respdata['records'][0][self.settings.config.FIELD_CODE]['value'];
 
-                    var numbering;
-                    if (self.isResetNumber(respdata)) {
-                        numbering = NUMBERING_DEFAULT;
-                    } else {
-                        // handle case NUM_OF_DIGIT was changed
-                        var lastIdArray = lastNumberingResponse.split(self.settings.config.CONNECTIVE);
-                        var lastIdInt = lastIdArray[lastIdArray.length - 1];
+                    /**
+                     * 接続語の空値を認めたのでsplit出来ないorg
+                     * そのため末尾から設定した自動採番の桁数分sliceする
+                     */
+                    var lastId = lastNumberingResponse.slice(-1 * self.settings.config.NUM_OF_DIGIT);
+                    var numbering = parseInt(lastId, 10) + 1;
+                    
+                    // if (self.isResetNumber(respdata)) {
+                    //     numbering = NUMBERING_DEFAULT;
+                    // } else {
+                    //     // handle case NUM_OF_DIGIT was changed
+                    //     var lastIdArray = lastNumberingResponse.split(self.settings.config.CONNECTIVE);
+                    //     var lastIdInt = lastIdArray[lastIdArray.length - 1];
 
-                        numbering = parseInt(lastIdInt, 10) + 1;
-                    }
+                    //     numbering = parseInt(lastIdInt, 10) + 1;
+                    // }
 
                     var numberingWithNumberOfDigit = self.createWithNumberOfDigit(numbering);
                     var numberingWithFormat = self.createFormat(numberingWithNumberOfDigit);
@@ -146,6 +153,13 @@
                     return (this.settings.config.TEXT +
                             this.settings.config.CONNECTIVE + date +
                             this.settings.config.CONNECTIVE + number);
+                            
+                case 'textPeriodNumbering':
+                    return (
+                        this.settings.config.TEXT +
+                        this.settings.config.CONNECTIVE +
+                        this.settings.config.NUM_OF_PERIOD +
+                        this.settings.config.CONNECTIVE + number);
 
                 default:
                     return ('');

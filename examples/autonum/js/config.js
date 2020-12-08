@@ -281,6 +281,7 @@
             $(this.settings.element.input.numberOfDigit).val(conf['numOfDigit']);
             $(this.settings.element.input.numberOfPeriod).val(conf['numOfPeriod']);
             this.checkAutonumFormat();
+            
         },
         listenAction: function() {
             var self = this;
@@ -315,7 +316,7 @@
             }
             var numOfDigit = parseInt($(this.settings.element.input.numberOfDigit).val(), 10);
             var numOfPeriod = parseInt($(this.settings.element.input.numberOfPeriod).val(), 10);
-            var number = new Array(numOfDigit).join('0') + '1'; //ここを最新のレコード番号+1にする？
+            var number = new Array(numOfDigit).join('0') + '1';
             var numberPeriod = parseInt(numOfPeriod, 10);
             var dateVal = $(this.settings.element.input.dateFormatSelect).val() || 'null';
             var connective = $(this.settings.element.input.connectiveSelect).val() || '';
